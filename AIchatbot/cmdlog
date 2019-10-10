@@ -1,0 +1,26 @@
+Microsoft Windows [Version 10.0.16299.98]
+(c) 2017 Microsoft Corporation. All rights reserved.
+
+E:\Code\Java\python\AIDataScience\AIchatbot>pip install tflearn
+Collecting tflearn
+Requirement already satisfied: six in c:\programdata\anaconda3\lib\site-packages (from tflearn) (1.12.0)
+Requirement already satisfied: numpy in c:\programdata\anaconda3\lib\site-packages (from tflearn) (1.16.4)
+Requirement already satisfied: Pillow in c:\programdata\anaconda3\lib\site-packages (from tflearn) (6.1.0)
+Installing collected packages: tflearn
+ERROR: Could not install packages due to an EnvironmentError: [WinError 5] Access is denied: 'C:\\ProgramData\\Anaconda3\\Lib\\site-packages\\tests\\__init__.py'
+Consider using the `--user` option or check the permissions.
+
+E:\Code\Java\python\AIDataScience\AIchatbot>python -m pip install tflearn -U pip --user
+Collecting tflearn
+Collecting pip
+  Using cached https://files.pythonhosted.org/packages/30/db/9e38760b32e3e7f40cce46dd5fb107b8c73840df38f0046d8e6514e675a1/pip-19.2.3-py2.py3-none-any.whl
+Requirement already satisfied, skipping upgrade: numpy in c:\programdata\anaconda3\lib\site-packages (from tflearn) (1.16.4)
+Requirement already satisfied, skipping upgrade: six in c:\programdata\anaconda3\lib\site-packages (from tflearn) (1.12.0)
+Requirement already satisfied, skipping upgrade: Pillow in c:\programdata\anaconda3\lib\site-packages (from tflearn) (6.1.0)
+Installing collected packages: tflearn, pip
+Successfully installed pip-19.2.3 tflearn-0.3.2
+
+E:\Code\Java\python\AIDataScience\AIchatbot>path
+PATH=C:\ProgramData\Anaconda3;C:\ProgramData\Anaconda3\Library\mingw-w64\bin;C:\ProgramData\Anaconda3\Library\usr\bin;C:\ProgramData\Anaconda3\Library\bin;C:\ProgramData\Anaconda3\Scripts;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\PuTTY\;C:\Program Files\Git\cmd;C:\Program Files\nodejs\;C:\Program Files\dotnet\;C:\Program Files\Dart\dart-sdk\bin;F:\MATLABR2014a\runtime\win64;F:\MATLABR2014a\bin;F:\MATLAB\MATLAB Production Server\R2014a\runtime\win64;F:\MATLAB\MATLAB Production Server\R2014a\bin;F:\MATLAB\MATLAB Production Server\R2014a\polyspace\bin;F:\MATLABR2014a\polyspace\bin;C:\Program Files (x86)\Git\cmd;C:\ProgramData\chocolatey\bin;C:\Program Files\AdoptOpenJDK\jdk8u192-b12\bin;C:\Program Files\Java\jdk1.8.0_211\bin;C:\Android\android-sdk\tools;C:\Android\android-sdk\platform-tools;C:\Android\android-sdk\tools\bin;E:\Software\php;C:\composer;C:\Users\Pritam\AppData\Local\Microsoft\WindowsApps;C:\Users\Pritam\AppData\Local\GitHubDesktop\bin;C:\Program Files\Heroku\bin;C:\Users\Pritam\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Pritam\AppData\Roaming\npm;E:\Software\AndroidStudio\flutter\bin;E:\Software\AndroidStudio\flutter\bin\cache\dart-sdk\bin;C:\Users\Pritam\AppData\Roaming\Pub\Cache\bin;E:\Software\apache-maven-3.6.1\bin;C:\Users\Pritam\AppData\Roaming\Composer\vendor\bin;C:\Users\Pritam\AppData\Local\Programs\Python\Python37-32;
+
+E:\Code\Java\python\AIDataScience\AIchatbot>
