@@ -1,0 +1,54 @@
+Microsoft Windows [Version 10.0.16299.98]
+(c) 2017 Microsoft Corporation. All rights reserved.
+
+E:\Code\Java\python\AI>SET PATH=%PATH%;C:\Users\Pritam\AppData\Local\Programs\Python\Python37-32;
+
+
+E:\Code\Java\python\AI>python
+Python 3.7.4 (tags/v3.7.4:e09359112e, Jul  8 2019, 19:29:22) [MSC v.1916 32 bit (Intel)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+>>>
+>>>
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+KeyboardInterrupt
+>>>
+Use exit() or Ctrl-Z plus Return to exit
+>>> ^Z^Z
+
+
+E:\Code\Java\python\AI>
+
+E:\Code\Java\python\AI>python pip install numpy scipy scikit-learn
+python: can't open file 'pip': [Errno 2] No such file or directory
+
+E:\Code\Java\python\AI>python -m pip install numpy scipy scikit-learn
+Collecting numpy
+  Downloading https://files.pythonhosted.org/packages/a8/ce/36f9b4fbc7e675a7c8a3809dd5902e24cecfcdbc006e8a7b2417c2b830a2/numpy-1.17.2-cp37-cp37m-win32.whl (10.8MB)
+     |████████████████████████████████| 10.8MB 50kB/s
+Collecting scipy
+  Downloading https://files.pythonhosted.org/packages/e1/9e/454b2dab5ee21f66ebf02ddbc63c5f074b21c44e66e1a509b38566cac9d9/scipy-1.3.1-cp37-cp37m-win32.whl (27.1MB)
+     |████████████████████████████████| 27.1MB 27kB/s
+Collecting scikit-learn
+  Downloading https://files.pythonhosted.org/packages/db/c8/5903e8f826f3b1b845942798f4948a817b6334f9601927c0eea09148cd70/scikit_learn-0.21.3-cp37-cp37m-win32.whl (5.2MB)
+     |████████████████████████████████| 5.2MB 27kB/s
+Collecting joblib>=0.11 (from scikit-learn)
+  Downloading https://files.pythonhosted.org/packages/cd/c1/50a758e8247561e58cb87305b1e90b171b8c767b15b12a1734001f41d356/joblib-0.13.2-py2.py3-none-any.whl (278kB)
+     |████████████████████████████████| 286kB 61kB/s
+Installing collected packages: numpy, scipy, joblib, scikit-learn
+  WARNING: The script f2py.exe is installed in 'C:\Users\Pritam\AppData\Local\Programs\Python\Python37-32\Scripts' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+Successfully installed joblib-0.13.2 numpy-1.17.2 scikit-learn-0.21.3 scipy-1.3.1
+
+E:\Code\Java\python\AI>python main.py
+Predicted target value: [0]
+
+Predicted feature name: ['setosa']
+
+Test score: 0.97
+
+E:\Code\Java\python\AI>python newscikit.py
+Outcome : [140.]
+Coefficients : [1. 2. 3.]
+
+E:\Code\Java\python\AI>nodemon newscikit.py

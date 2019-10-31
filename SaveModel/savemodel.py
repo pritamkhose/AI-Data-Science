@@ -37,10 +37,10 @@ print(knn_from_pickle.predict(X_test))
 import joblib
 
 # Save the model as a pickle in a file 
-joblib.dump(knn_from_pickle, 'knn_model.pkl') 
+#joblib.dump(knn_from_pickle, './SaveModel/knn_model.pkl') 
 
 # Load the model from the file 
-knn_from_joblib = joblib.load('knn_model.pkl') 
+knn_from_joblib = joblib.load('./SaveModel/knn_model.pkl') 
 
 # Use the loaded model to make predictions 
 knn_from_joblib.predict(X_test) 
