@@ -8,6 +8,43 @@ https://machinelearningmastery.com/machine-learning-in-python-step-by-step/
 https://towardsdatascience.com/simple-machine-learning-model-in-python-in-5-lines-of-code-fe03d72e78c6
 
 ----------------------------------------------------------------------------------------
+sudo apt install python3       
+sudo apt install python        
+sudo apt install python-minimal
+sudo apt install git
+sudo apt-get install python3-pip
+
+python3 -m pip list
+python3 -m pip install scikit-learn 
+python3 -m pip install matplotlib pandas
+python3 -m pip install tensorflow
+python3 -m pip install --upgrade keras
+python3 -m pip install nltk
+python3 -m pip install pandas_datareader
+
+SET PATH=%PATH%;C:\Users\Pritam\AppData\Local\Programs\Python\Python38-32;
+sudo apt-get -y install python3-pip
+
+python -m pip install Django
+---------------------------------------
+
+pip install face_recognition
+or
+pip install cmake dlib
+pip install Pillow, dlib, face-recognition-models, face-recognition
+
+---------------------------------------
+
+pip install flask flask_pymongo wget
+pip install pprint bson werkzeug
+pip install sklearn joblib pandas
+
+pip install numpy scipy matplotlib scikit-learn jupyter
+
+
+pip install --upgrade pip
+----------------------------------------------------------------------------------------
+
 python -m pip install numpy scipy scikit-learn
 
 python -m pip install matplotlib pandas

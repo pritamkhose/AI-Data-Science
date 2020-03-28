@@ -1,0 +1,169 @@
+
+
+
+python3 manage.py runserver ec2-3-135-62-65.us-east-2.compute.amazonaws.com:3000
+
+python3 manage.py runserver 0.0.0.0:3000
+
+sudo firewall-cmd --permanent --add-port=3000/tcp
+sudo firewall-cmd --reload
+---------------------------------------
+
+SET PATH=%PATH%;C:\Users\Pritam\AppData\Local\Programs\Python\Python38-32;
+sudo apt-get -y install python3-pip
+
+python -m pip install Django
+---------------------------------------
+
+pip install face_recognition
+or
+pip install cmake dlib
+pip install Pillow, dlib, face-recognition-models, face-recognition
+
+---------------------------------------
+
+
+pip install flask flask_pymongo wget
+pip install pprint bson werkzeug
+pip install sklearn joblib pandas
+
+pip install numpy scipy matplotlib scikit-learn jupyter
+
+
+pip install --upgrade pip
+
+
+@app.route('/face_Recon', methods=['GET'])
+def face_Recon():
+    try:
+        # Load a picture and learn how to recognize it.
+        face_image = face_recognition.load_image_file("outfit3.jpg")
+
+        try:
+            face_locations = face_recognition.face_locations(face_image)
+            face_landmarks = face_recognition.face_landmarks(face_image)
+
+            arr = np.array(face_image)
+            response = make_response(json.dumps({
+                'result': True,
+                'img_width': arr.shape[0],
+                'img_hight': arr.shape[1],
+                'face_locations': face_locations,
+                'face_landmarks': face_landmarks
+            }))    
+        except:
+            response = make_response(json.dumps({
+                'result': False,
+                'error': 'Unable to process image file'
+            }))
+    except:
+        response = make_response(json.dumps({
+            'result': False,
+            'error': 'Invalid image file'
+        }))
+    response.headers['Content-Type'] = 'application/json; charset=utf-8'
+    return response
+
+	
+--------------------------------------------------------------
+
+https://www.youtube.com/watch?v=QjrfUO91wfc
+
+Python django deployment from GitHub to aws ec2 (Elastic Compute Cloud)
+
+cd Downloads/
+mv zillows.pem ~/Desktop/
+cd ..
+cd desktop
+
+chmod
+
+ssh
+
+yes
+
+sudo apt-get update
+sudo apt-get install python-pip python-dev nginx git
+
+Y
+
+sudo apt-get update
+sudo pip install virtualenv
+git clone https://github.com/mruanova/zillow.git
+cd zillow
+virtualenv venv
+source venv/bin/activate
+pip install -r requirements.txt
+pip install django bcrypt django-extensions
+pip install gunicorn
+cd zillow
+sudo vim settings.py
+
+
+# Inside settings.py modify these lines allowed host public IP address I for INSERT
+
+i
+
+
+ALLOWED_HOSTS = ['3.135.62.65']
+
+# add the line below to the bottom of the file
+
+STATIC_ROOT = os.path.join(BASE_DIR, "static/")
+
+Save your changes and quit. ESC :wq
+
+cd .. 
+python manage.py collectstatic
+gunicorn --bind 0.0.0.0:3000 DjangoRestAPI.wsgi:application
+
+ctrl+c
+
+sudo vim /etc/systemd/system/gunicorn.service
+
+i
+
+[Unit]
+Description=gunicorn daemon
+After=network.target
+[Service]
+User=ubuntu
+Group=www-data
+WorkingDirectory=/home/ubuntu/DjangoRestAPI
+ExecStart=/home/ubuntu/DjangoRestAPI/venv/bin/gunicorn --workers 3 --bind unix:/home/ubuntu/DjangoRestAPI/DjangoRestAPI.sock DjangoRestAPI.wsgi:application
+[Install]
+WantedBy=multi-user.target
+
+ESC :wq
+
+sudo systemctl daemon-reload
+sudo systemctl start gunicorn
+sudo systemctl enable gunicorn
+sudo vim /etc/nginx/sites-available/DjangoRestAPI
+
+i
+
+server {
+  listen 80;
+  server_name 3.135.62.65;
+  location = /favicon.ico { access_log off; log_not_found off; }
+  location /static/ {
+      root /home/ubuntu/DjangoRestAPI;
+  }
+  location / {
+      include proxy_params;
+      proxy_pass http://unix:/home/ubuntu/DjangoRestAPI/DjangoRestAPI...
+  }
+}
+
+ESC :wq
+
+sudo ln -s /etc/nginx/sites-available/zillow /etc/nginx/sites-enabled
+sudo nginx -t
+sudo rm /etc/nginx/sites-enabled/default
+sudo service nginx restart
+
+http://3.135.62.65
+
+
+https://github.com/ShobiExplains/AwsDemo
