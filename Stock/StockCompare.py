@@ -76,10 +76,10 @@ for i in URLArr:
 #    plt.grid()
 #    plt.legend( loc='lower left')
 #    #plt.xaxis.set_major_formatter(myFmt)
-#    plt.savefig('ResultImage/'i+'.png')
+#    plt.savefig('result/'i+'.png')
     #plt.show()    
 
 plt.grid()
 plt.legend( loc='lower left')
-plt.savefig("ResultImage/result.png")   
+plt.savefig("result/result.png")   
 plt.show()       
