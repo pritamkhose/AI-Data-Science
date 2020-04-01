@@ -6,8 +6,8 @@ Created on Sun Mar 29 11:27:22 2020
 https://charting.bseindia.com/index.html?SYMBOL=532174#
 """
 
-
 #Import the libraries
+import os
 import math
 import numpy as np
 import pandas as pd
@@ -15,32 +15,35 @@ import matplotlib.pyplot as plt
 #plt.style.use('fivethirtyeight')
 import json
 import requests
-# icici 532174  infy 500209
-#url = 'https://charting.bseindia.com/charting/RestDataProvider.svc/getDat?exch=N&scode=500209&type=b&mode=bseL&fromdate=01-01-1991-01:01:00-AM'
-#datajson = json.loads(requests.post(url).json()['getDatResult'])
-#datainval = datajson['DataInputValues'][0]
-#
-#OpenData = datainval['OpenData'][0]['Open'].split(",")
-#CloseData = datainval['CloseData'][0]['Close'].split(",")
-#LowValues = datainval['LowData'][0]['Low'].split(",")
-#VolumeData = datainval['VolumeData'][0]['Volume'].split(",")
-#DateData = datainval['DateData'][0]['Date'].split(",")
-#
-#PVList = [];
-#
-#for row in range(len(OpenData)):
-#    PVList.append([row, pd.to_datetime(DateData[row]), float(OpenData[row]) , float(CloseData[row]), float(LowValues[row]), float(VolumeData[row])])
-#df = pd.DataFrame(PVList, columns =['Index','Date', 'Open', 'Close', 'Low', 'Volume']) 
-#
-#vper =  10000 #df['Volume'].mean()*0.1
-##Visualize the data
-#plt.figure(figsize=(16,8))
-#plt.title('Stock ')
-#plt.xlabel('Date', fontsize=10)
-#plt.ylabel('Price', fontsize=10)
-#plt.plot(df['Index'], df['Open'], label = "Price", linewidth=1,)
-#plt.plot((df['Volume']/vper), label = "Volume", linewidth=1,)
-#plt.legend()
-#plt.grid()
-#plt.savefig("1.png")
-#plt.show()    
+
+headers = {'User-Agent': 'Mozilla/5.0 (iPad; U; CPU OS 3_2_1 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Mobile/7B405'}
+compname = 'INFYEQN'
+url = 'https://www.nseindia.com/api/chart-databyindex?index=' + compname
+datajson = requests.get(url, headers=headers).json()
+
+if not os.path.exists('data'):
+    os.makedirs('data')
+# Writing to json file
+with open('data/'+compname + '.json', 'w') as outfile: 
+    outfile.write(json.dumps(datajson))
+# Read to json file
+with open('data/'+compname + '.json') as json_file:
+    datajson = json.load(json_file)
+    
+datainval = datajson['grapthData']
+PVList=[]
+for row in range(len(datainval)):
+    PVList.append([ row, pd.to_datetime(datainval[row][0]), datainval[row][1]])
+df = pd.DataFrame(PVList, columns =['index','date', 'price']) 
+df.index = df['date']
+
+#Visualize the data
+plt.figure(figsize=(16,8))
+plt.title('Stock ')
+plt.xlabel('Date', fontsize=10)
+plt.ylabel('Price', fontsize=10)
+plt.plot(df['price'], label = "Price", linewidth=1,)
+plt.legend()
+plt.grid()
+plt.savefig("1.png")
+plt.show()    

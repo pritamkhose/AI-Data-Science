@@ -38,11 +38,6 @@ plt.figure(figsize=(16,8))
 plt.plot(df['Close'], label='Close Price history', linewidth=1,)
 plt.savefig("1.png")
 
-
-#setting index as date values
-df['Date'] = pd.to_datetime(df.Date,format='%Y-%m-%d')
-df.index = df['Date']
-
 #sorting
 data = df.sort_index(ascending=True, axis=0)
 

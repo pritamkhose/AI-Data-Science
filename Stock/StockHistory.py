@@ -22,7 +22,7 @@ i = 'IT'
 #for i in URLArr:
 #Get the stock quote
 # Read json file in folder    
-with open('datajson/IT.json') as json_file:
+with open('data/IT.json') as json_file:
     dataread = json.load(json_file)
     
 shareQty = 10;
