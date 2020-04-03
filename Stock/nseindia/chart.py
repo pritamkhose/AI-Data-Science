@@ -4,6 +4,9 @@ Created on Sun Mar 29 11:27:22 2020
 
 @author: Pritam
 https://charting.bseindia.com/index.html?SYMBOL=532174#
+
+https://www.nseindia.com/api/historical/cm/equity?symbol=INFY&series=[%22EQ%22]&from=02-04-2019&to=02-04-2020
+
 """
 
 #Import the libraries

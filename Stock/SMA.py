@@ -14,7 +14,7 @@ import matplotlib.pyplot as plt
 plt.style.use('fivethirtyeight')
 
 #Get the stock quote
-df = web.DataReader('INFY', data_source='yahoo', start='2018-01-01', end='2020-03-27')
+df = web.DataReader('INFY.NS', data_source='yahoo', start='2020-01-01', end='2020-04-01')
 
 #Get the number of rows and columns in the data set
 print(df.shape)
