@@ -30,6 +30,11 @@ https://api.bseindia.com/BseIndiaAPI/api/SecurityPosition/w?quotetype=EQ&scripco
 
 
 https://realpython.com/beautiful-soup-web-scraper-python/
+
+https://api.bseindia.com/BseIndiaAPI/api/Dropdowndata/w
+https://api.bseindia.com/BseIndiaAPI/api/IndexList/w
+https://api.bseindia.com/BseIndiaAPI/api/GetMktData/w?ordcol=TT&strType=index&strfilter=S%26P+BSE+SENSEX
+https://api.bseindia.com/BseIndiaAPI/api/GetMktData/w?ordcol=NS&strType=AllMkt&strfilter=All
 """
 
 
