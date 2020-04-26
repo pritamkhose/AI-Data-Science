@@ -45,11 +45,16 @@ def candle_score(lst_0, lst_1, lst_2):
     bearish_reversal = (O2 < C2) & (O1 < C1) & doji
 
     evening_star = (C2 > O2) & (min(O1, C1) > C2) & (
-        O0 < min(O1, C1)) & (C0 < O0)
+    EveningStarLessAcc  = (C2 > O2) & (min(O1, C1) > C2) & (O0 < min(O1, C1)) & (C0 < O0)
 
-    morning_star = (C2 < O2) & (min(O1, C1) < C2) & (
-        O0 > min(O1, C1)) & (C0 > O0)
+    MorningStarLessAcc  = (C2 < O2) & (min(O1, C1) < C2) & (O0 > min(O1, C1)) & (C0 > O0)
+    
+    morning_star = ((O2 > C2) & ((O2 - C2) / (.001 + H2 - L2) > .6) & (C2 > O1) & (O1 > C1) & ((H1 - L1) > (3 * (C1 - O1))) & (C0 > O0) & (O0 > O1))
 
+    evening_star = ((C2 > O2) & ((C2 - O2) / (.001 + H2 - L2) > .6) & (C2 < O1) & (C1 > O1) & ((H1 - L1) > (3 * (C1 - O1))) & (O0 > C0) & (O0 < O1))
+
+    ShootingStar = (((H0 - L0) > 4 * (O0 - C0)) & ((H0 - C0) / (.001 + H0 - L0) >= 0.75) & ((H0 - O0) / (.001 + H0 - L0) >= 0.75))
+    
     shooting_Star_bearish = (O1 < C1) & (O0 > C1) & (
         (H0 - max(O0, C0)) >= abs(O0 - C0) * 3) & ((min(C0, O0) - L0) <= abs(O0 - C0)) & inverted_hammer
 
@@ -70,6 +75,10 @@ def candle_score(lst_0, lst_1, lst_2):
 
     Piercing_Line_bullish = (C1 < O1) & (C0 > O0) & (
         O0 < L1) & (C0 > C1) & (C0 > ((O1 + C1)/2)) & (C0 < O1)
+    
+    PiercingLine = ((C1 < O1) & (((O1 + C1) / 2) < C0) & (O0 < C0) & (O0 < C1) & (C0 < O1) & ((C0 - O0) / (.001 + (H0 - L0)) > 0.6))
+    
+    HangingMan = (((H0 - L0) > 4 * (O0 - C0)) & ((C0 - L0) / (.001 + H0 - L0) >= 0.75) & ((O0 - L0) / (.001 + H0 - L0) >= .075))
 
     Hanging_Man_bullish = (C1 < O1) & (O0 < L1) & (
         C0 > ((O1 + C1)/2)) & (C0 < O1) & hammer
@@ -83,6 +92,18 @@ def candle_score(lst_0, lst_1, lst_2):
 
     Bearish_Kicker = (O1 < C1) & (O0 <= O1) & (C0 <= O0)
 
+    ThreeOutsideDownPattern = ((C2>O2)&(O1>C1)&(O1>=C2)&(O2>=C1)&((O1-C1)>(C2-O2))&(O0>C0) & (C0<C1))
+    
+    ThreeOutsideUpPattern = ((O2>C2)&(C1>O1)&(C1>=O2)&(C2>=O1)&((C1-O1)>(O2-C2))& (C0>O0)& (C0>C1))
+    
+    ThreeInsideUpPattern = ((O2>C2)&(C1>O1)&(C1<=O2)&(C2<=O1)&((C1-O1)<(O2-C2))&(C0>O0)&(C0>C1)&(O0>O1))
+    
+    ThreeInsideDownPattern = ((C2>O2)&(O1>C1)&(O1<=C2)&(O2<=C1)&((O1-C1)<(C2-O2))&(O0>C0)&(C0>C1)& (O0>O1))
+    
+    ThreeWhiteSoldiersPCF = ((C0>O0*1.01) &(C1>O1*1.01) &(C2>O2*1.01) &(C0>C1) &
+    (C1>C2) &(O0 > O1) &(O1> O2) &
+    (((H0-C0)/(H0-L0))<.2) &(((H1-C1)/(H1-L1))<.2)&(((H2-C2)/(H2-L2))<.2))
+    
 
     strCandle = []
     candle_score = 0
@@ -100,6 +121,10 @@ def candle_score(lst_0, lst_1, lst_2):
     if morning_star:
         strCandle.append('Morning star')
         candle_score = candle_score+1
+    if EveningStarLessAcc:
+        strCandle.append('Evening star less Accuracy')
+    if MorningStarLessAcc:
+        strCandle.append('Morning star less Accuracy') 
     if shooting_Star_bearish:
         strCandle.append('Shooting Star bearish')
         candle_score = candle_score-1
@@ -142,8 +167,27 @@ def candle_score(lst_0, lst_1, lst_2):
     if Bullish_Kicker:
         strCandle.append('Bullish Kicker')
     if Bearish_Kicker:
-        strCandle.append('Bearish Kicker')
-    # return candle_score
+        strCandle.append('Bearish Kicker')    
+    if ShootingStar:
+        strCandle.append('Shooting Star')
+    if PiercingLine:
+        strCandle.append('Piercing Line')
+    if HangingMan:
+        strCandle.append('Hanging Man')
+        
+    if ThreeOutsideDownPattern:
+        strCandle.append('Three Outside Down Pattern')
+    if ThreeOutsideUpPattern:
+        strCandle.append('Three Outside Up Pattern')
+    if ThreeInsideUpPattern:
+        strCandle.append('Three Inside Up Pattern')    
+    if ThreeInsideDownPattern:
+        strCandle.append('Three Inside Down Pattern')
+    if ThreeWhiteSoldiersPCF:
+        strCandle.append('Three White Soldiers PCF')
+    if ThreeBlackCrowsPCF:
+        strCandle.append('Three Black Crows PCF')
+        
     return candle_score, strCandle
 
 
