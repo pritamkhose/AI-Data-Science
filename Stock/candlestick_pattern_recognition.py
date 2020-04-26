@@ -44,7 +44,6 @@ def candle_score(lst_0, lst_1, lst_2):
 
     bearish_reversal = (O2 < C2) & (O1 < C1) & doji
 
-    evening_star = (C2 > O2) & (min(O1, C1) > C2) & (
     EveningStarLessAcc  = (C2 > O2) & (min(O1, C1) > C2) & (O0 < min(O1, C1)) & (C0 < O0)
 
     MorningStarLessAcc  = (C2 < O2) & (min(O1, C1) < C2) & (O0 > min(O1, C1)) & (C0 > O0)
@@ -104,6 +103,11 @@ def candle_score(lst_0, lst_1, lst_2):
     (C1>C2) &(O0 > O1) &(O1> O2) &
     (((H0-C0)/(H0-L0))<.2) &(((H1-C1)/(H1-L1))<.2)&(((H2-C2)/(H2-L2))<.2))
     
+    ThreeBlackCrowsPCF = ((O0 > C0 * 1.01) & (O1 > C1 * 1.01) & (O2 > C2 *
+    1.01) & (C0 < C1) & (C1 < C2) & (O0 > C1) & (O0 < O1) &
+    (O1 > C2) & (O1 < O2) & (((C0 - L0) / (H0 - L0)) < .2) &
+    (((C1 - L1) / (H1 - L1)) < .2) & (((C2 - L2) / (H2 - L2)) < .2))
+
 
     strCandle = []
     candle_score = 0
