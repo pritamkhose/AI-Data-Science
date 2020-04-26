@@ -42,6 +42,9 @@ PVList = [];
 for row in range(len(stock)):
     PVList.append([pd.to_datetime(stock[row]['date']), float(stock[row]['value']), float(stock[row]['open']) , float(stock[row]['close']), float(stock[row]['low']), float(stock[row]['high']), float(stock[row]['volume'])])
 df = pd.DataFrame(PVList ,columns =['date', 'value', 'open', 'close', 'low', 'high', 'volume']) 
+# for 5d
+#    PVList.append([stock[row]['date'], float(stock[row]['value']), float(stock[row]['volume'])])
+#df = pd.DataFrame(PVList ,columns =['date', 'value', 'volume']) 
 
 df.to_json('data/'+compname + '1.json')
 

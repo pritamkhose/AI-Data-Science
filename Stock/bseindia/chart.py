@@ -4,6 +4,10 @@ Created on Sun Mar 29 11:27:22 2020
 
 @author: Pritam
 https://charting.bseindia.com/index.html?SYMBOL=532174#
+
+https://charting.bseindia.com/charting/RestDataProvider.svc/getDatI?exch=N&scode=500180&type=b&mode=bseL&fromdate=24-04-2020-04:00:03-PM
+https://charting.bseindia.com/charting/RestDataProvider.svc/getDat?exch=N&scode=500180&type=b&mode=bseL&fromdate=01-01-1991-01:01:00-AM
+
 """
 
 
