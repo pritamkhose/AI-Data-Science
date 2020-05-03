@@ -58,3 +58,9 @@ if not os.path.exists('data'):
 # Writing to json file
 with open('data/bseAll.json', 'w') as outfile: 
     outfile.write(json.dumps(datajson))
+    
+#PVList = []
+#for row in range(len(datajson)):
+#    PVList.append([datajson[row]['scripname']])
+#df = pd.DataFrame(PVList, columns =['scripname']) 
+#print(df['scripname'])
