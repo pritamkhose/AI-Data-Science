@@ -70,7 +70,7 @@ df['SMA20P'] = df.iloc[:,10].rolling(window=20).mean()
 ##dffinal = df1.join(df, on='index', how='inner')
 #df['CCI'] =(df['P']-df['SMA20P'])/(0.015*df1['dev'])
 
-df['dev'] = df['SMA20P'].rolling(window).std()
+df['dev'] = df['SMA20P'].rolling(window=20).std()
 df['CCI'] = (df['P']-df['SMA20P'])/(0.015*df['dev'])
 
 # Bollinger band
@@ -82,19 +82,32 @@ rolling_std = df['Close'].rolling(window).std()
 df['BollingerHigh'] = df['rolling_mean'] + (rolling_std * no_of_std)
 df['BollingerLow'] = df['rolling_mean'] - (rolling_std * no_of_std)
 
+df['SMA_20'] = df.iloc[:,3].rolling(window=20).mean()
+df['EMA_20'] = df.iloc[:,3].ewm(span=20,adjust=False).mean()
+weights = np.arange(1,(20+1))
+df['WMA_20'] = df['Close'].rolling(20).apply(lambda prices: np.dot(prices, weights)/weights.sum(), raw=True)
+
 #Visualize the data
 plt.figure(figsize=(16,8))
 plt.title('Stock')
 plt.xlabel('Date', fontsize=10)
-plt.plot(df['ATR'], linewidth=1)
-plt.plot(df['MFI'], linewidth=1)
-plt.plot(df['Williamson'], linewidth=1)
-plt.plot(df['ROC'], linewidth=1)
+#plt.plot(df['ATR'], linewidth=1)
+#plt.plot(df['MFI'], linewidth=1)
+#plt.plot(df['Williamson'], linewidth=1)
+#plt.plot(df['ROC'], linewidth=1)
 #plt.plot(df['CCI'], linewidth=1)
-plt.legend(['ATR', 'MFI', 'Williamson', 'ROC', 'CCI'], loc='lower right')
+#plt.legend(['ATR', 'MFI', 'Williamson', 'ROC', 'CCI'], loc='lower right')
+
 #plt.plot(df['Close'], linewidth=1)
 #plt.plot(df['BollingerHigh'], linewidth=1, color='green')
 #plt.plot(df['BollingerLow'], linewidth=1, color='red')
 #plt.legend(['Close', 'BollingerHigh', 'BollingerLow'], loc='lower right')
+
+plt.plot(df['Close'], linewidth=1)
+plt.plot(df['SMA_20'], linewidth=1)
+plt.plot(df['EMA_20'], linewidth=1)
+plt.plot(df['WMA_20'], linewidth=1)
+plt.legend(['Close', 'SMA_20', 'EMA_20', 'WMA_20'], loc='lower right')
+
 #plt.show()
 plt.savefig('1.png')
