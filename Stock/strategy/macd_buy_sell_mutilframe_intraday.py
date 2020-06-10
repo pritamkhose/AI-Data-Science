@@ -21,7 +21,7 @@ import requests
 
 # Get Data
 #1d 5d max
-compname = 'SBI'
+compname = 'IT'
 #url = 'https://www.moneycontrol.com/mc/widget/basicchart/get_chart_value?classic=true&dur=max&sc_did=' + compname
 url = 'https://www.moneycontrol.com/mc/widget/basicchart/get_chart_value?classic=true&dur=5d&sc_did=' + compname
 datajson = requests.get(url).json()
@@ -140,61 +140,6 @@ plotChart( df15, '15T', 'close')
       
 FinalList = [];
 
-## All
-#for i in range(len(df)):
-#    datetime = str(df.index[i])
-#    resultDict = { '1T': df.iloc[1].to_frame().to_json() }
-#    d3 = df3.query('date == "'+datetime+'"')
-#    if(len(d3) == 1):
-#        resultDict['3T'] = d3.to_json()       
-#    d5 = df5.query('date == "'+datetime+'"')
-#    if(len(d5) == 1):
-#        resultDict['5T'] = d5.to_json() #str(d5.to_json(orient='records', lines=True))   
-#    d10 = df10.query('date == "'+datetime+'"')
-#    if(len(d10) == 1):
-#        resultDict['10T'] = d10.to_json()       
-#    d15 = df15.query('date == "'+datetime+'"')
-#    if(len(d15) == 1):
-#        resultDict['15T'] = d15.to_json()
-
-### Short
-#for i in range(len(df)):
-#    datetime = str(df.index[i])
-#    resultDict = { 'value': df.iloc[i]['value'],  'date': datetime}
-#    d3 = df3.query('date == "'+datetime+'"')
-#    if(len(d3) == 1):
-#        resultDict['3T'] = { 'sell': d3.iloc[0]['sigPriceSell'] , 'buy': d3.iloc[0]['sigPriceBuy']}
-#    d5 = df5.query('date == "'+datetime+'"')
-#    if(len(d5) == 1):
-#        resultDict['5T'] = { 'sell': d5.iloc[0]['sigPriceSell'] , 'buy': d5.iloc[0]['sigPriceBuy']}
-#    d10 = df10.query('date == "'+datetime+'"')
-#    if(len(d10) == 1):
-#        resultDict['10T'] = { 'sell': d10.iloc[0]['sigPriceSell'] , 'buy': d10.iloc[0]['sigPriceBuy']} 
-#    d15 = df15.query('date == "'+datetime+'"')
-#    if(len(d15) == 1):
-#        resultDict['15T'] = { 'sell': d15.iloc[0]['sigPriceSell'] , 'buy': d15.iloc[0]['sigPriceBuy']}
-
-## Short object only
-#for i in range(len(df)):
-#    datetime = str(df.index[i])
-#    resultDict = { 'index' : i, 'value': df.iloc[i]['value'],  'date': datetime}
-#    d3 = df3.query('date == "'+datetime+'"')
-#    if(len(d3) == 1):
-#        resultDict['3T_sell'] = d3.iloc[0]['sigPriceSell']
-#        resultDict['3T_buy'] = d3.iloc[0]['sigPriceBuy']
-#    d5 = df5.query('date == "'+datetime+'"')
-#    if(len(d5) == 1):
-#        resultDict['5T_sell'] = d5.iloc[0]['sigPriceSell'] 
-#        resultDict['5T_buy'] = d5.iloc[0]['sigPriceBuy']
-#    d10 = df10.query('date == "'+datetime+'"')
-#    if(len(d10) == 1):
-#        resultDict['10T_sell'] = d10.iloc[0]['sigPriceSell'] 
-#        resultDict['10T_buy'] = d10.iloc[0]['sigPriceBuy']
-#    d15 = df15.query('date == "'+datetime+'"')
-#    if(len(d15) == 1):
-#        resultDict['15T_sell'] = d15.iloc[0]['sigPriceSell'] 
-#        resultDict['15T_buy'] = d15.iloc[0]['sigPriceBuy']
-
 ## Plot
 for i in range(len(df)):
     datetime = str(df.index[i])
@@ -232,7 +177,7 @@ with open(compname + '.json', 'w') as outfile:
     
 fig, axs = plt.subplots(4, figsize=(20, 10))
 fig.suptitle(compname + ' Stock')
-start = 1500;
+start = 1000;
 end = len(df);
 
 axs[0].plot(dffinal['value'][start:end], label = 'price T3', linewidth=1, color='lime')
@@ -244,12 +189,12 @@ axs[1].scatter(dffinal.index[start:end], dffinal['T5_buy'][start:end], label = '
 axs[1].scatter(dffinal.index[start:end], dffinal['T5_sell'][start:end], label = 'T5_sell', marker= 'v', color='red')
 
 axs[2].plot(dffinal['value'][start:end], label = 'price T10', linewidth=1, color='yellow')
-axs[2].scatter(dffinal.index[start:end], dffinal['T10_buy'][start:end], label = 'T5_buy', marker= '^', color='green')
-axs[2].scatter(dffinal.index[start:end], dffinal['T10_sell'][start:end], label = 'T5_sell', marker= 'v', color='red')
+axs[2].scatter(dffinal.index[start:end], dffinal['T10_buy'][start:end], label = 'T10_buy', marker= '^', color='green')
+axs[2].scatter(dffinal.index[start:end], dffinal['T10_sell'][start:end], label = 'T10_sell', marker= 'v', color='red')
 
 axs[3].plot(dffinal['value'][start:end], label = 'price T15', linewidth=1, color='pink')
-axs[3].scatter(dffinal.index[start:end], dffinal['T15_buy'][start:end], label = 'T5_buy', marker= '^', color='green')
-axs[3].scatter(dffinal.index[start:end], dffinal['T15_sell'][start:end], label = 'T5_sell', marker= 'v', color='red')
+axs[3].scatter(dffinal.index[start:end], dffinal['T15_buy'][start:end], label = 'T15_buy', marker= '^', color='green')
+axs[3].scatter(dffinal.index[start:end], dffinal['T15_sell'][start:end], label = 'T15_sell', marker= 'v', color='red')
 
 
 fig.legend()
