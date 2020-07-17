@@ -66,13 +66,22 @@ def cal_Bollinger_Bands(df, pricetype):
     # Bollinger band
     window = 20
     no_of_std = 2
-    df['BollingerMean']  = df['close'].rolling(window).mean()
-    rolling_std = df['close'].rolling(window).std()
+    df['BollingerMean']  = df[pricetype].rolling(window).mean()
+    rolling_std = df[pricetype].rolling(window).std()
     #create two new DataFrame columns to hold values of upper and lower Bollinger bands
     df['BollingerHigh'] = df['BollingerMean'] + (rolling_std * no_of_std)
     df['BollingerLow'] = df['BollingerMean'] - (rolling_std * no_of_std)
     return df
-    
+
+# https://school.stockcharts.com/doku.php?id=technical_indicators:percentage_volume_oscillator_pvo
+def cal_PVolO(df, pricetype):
+    df_ema12 = df[pricetype].ewm(span=12,adjust=False).mean()
+    df_ema26 = df[pricetype].ewm(span=26,adjust=False).mean()
+    df['PVO'] = ((df_ema12 - df_ema26)/df_ema26)*100
+    df['Volsignal'] = df['PVO'].ewm(span=9,adjust=False).mean()
+    df['PVO_histogram'] = df['PVO'] - df['Volsignal']
+    return df
+
 def rsi_ud(df_diff):
     PVList=[]
     for row in range(len(df_diff)):
@@ -151,10 +160,14 @@ def plotChart(df, name, pricetype):
     axs[2].plot(df['SMA_avg'][start:end], label = 'SMA avg', linewidth=1, color='green')
     
 #    axs[3].bar(df.index[start:end], df['volume'][start:end], label = 'volume')
-    axs[3].plot(df[pricetype][start:end], label = pricetype + ' Price', linewidth=1, color='blue')
-    axs[3].plot(df['BollingerHigh'][start:end], label = 'high', linewidth=1, color='green')
-    axs[3].plot(df['BollingerLow'][start:end], label = 'low', linewidth=1, color='red')
-    axs[3].plot(df['BollingerMean'][start:end], label = 'mean', linewidth=1, color='black')
+#    axs[3].plot(df[pricetype][start:end], label = pricetype + ' Price', linewidth=1, color='blue')
+#    axs[3].plot(df['BollingerHigh'][start:end], label = 'high', linewidth=1, color='green')
+#    axs[3].plot(df['BollingerLow'][start:end], label = 'low', linewidth=1, color='red')
+#    axs[3].plot(df['BollingerMean'][start:end], label = 'mean', linewidth=1, color='black')
+        
+    axs[3].plot(df['PVO'][start:end], label = 'PVO', linewidth=1, color='black')
+    axs[3].plot(df['Volsignal'][start:end], label = 'Vol signal', linewidth=1, color='red')
+    axs[3].bar(df.index[start:end], df['PVO_histogram'][start:end], label = 'vol histogram')
     
     
     fig.legend()
@@ -190,6 +203,7 @@ df3 = caculate_macd(df3, 'close')
 df3 = caculate_rsi(df3, 'close')
 df3 = caculate_mov(df3, 'close')
 df3 = cal_Bollinger_Bands(df3, 'close')
+df3 = cal_PVolO(df3, 'volume')
 df3 = buy_sell(df3, 'close')
 plotChart( df3, '3T', 'close')
 
@@ -198,6 +212,7 @@ df5 = caculate_macd(df5, 'close')
 df5 = caculate_rsi(df5, 'close')
 df5 = caculate_mov(df5, 'close')
 df5 = cal_Bollinger_Bands(df5, 'close')
+df5 = cal_PVolO(df5, 'volume')
 df5 = buy_sell(df5, 'close')
 plotChart( df5, '5T', 'close')
 
@@ -206,6 +221,7 @@ df10 = caculate_macd(df10, 'close')
 df10 = caculate_rsi(df10, 'close')
 df10 = caculate_mov(df10, 'close')
 df10 = cal_Bollinger_Bands(df10, 'close')
+df10 = cal_PVolO(df10, 'volume')
 df10 = buy_sell(df10, 'close')
 plotChart( df10, '10T', 'close')
 
@@ -214,6 +230,7 @@ df15 = caculate_macd(df15, 'close')
 df15 = caculate_rsi(df15, 'close')
 df15 = caculate_mov(df15, 'close')
 df15 = cal_Bollinger_Bands(df15, 'close')
+df15 = cal_PVolO(df15, 'volume')
 df15 = buy_sell(df15, 'close')
 plotChart( df15, '15T', 'close')
 
