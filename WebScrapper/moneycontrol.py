@@ -15,16 +15,16 @@ soup = BeautifulSoup(page.content, 'html.parser')
 
 #results = soup.find('table', class_='tbldata14 bdrtpg')
 results = soup.find('td')
-#print(soup)
+# print(soup)
 
 i = 0
 for a in soup.find_all('a', href=True):
     link = a['href']
-    if "/india/stockpricequote/" in link: 
-        i = i+ 1
-        print (link)
+    if "/india/stockpricequote/" in link:
+        i = i + 1
+        print(link)
 
-#for job_elem in job_elems:
+# for job_elem in job_elems:
 #    # Each job_elem is a new BeautifulSoup object.
 #    # You can use the same methods on it as you did before.
 #    title_elem = job_elem.find('h2', class_='title')
