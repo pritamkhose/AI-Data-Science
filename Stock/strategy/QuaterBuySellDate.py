@@ -14,7 +14,7 @@ import json
 import requests
 
 
-compname = 'IT' #'W' as 14 is Result date
+compname = 'W' #'W' or 'IT' as 14 is Result date  
 
 url = 'https://www.moneycontrol.com/mc/widget/basicchart/get_chart_value?classic=true&dur=max&sc_did=' + compname
 # url = 'https://www.moneycontrol.com/mc/widget/basicchart/get_chart_value?classic=true&dur=5d&sc_did=' + compname
@@ -51,8 +51,8 @@ def calcHLOCV(df, sample):
 
 
 s = ''
-for x in range(15):
-    x = str(x+1)
+for x in range(1,20):
+    x = str(x)
     if(len(x) == 1):
         s = s + '-01-0'+ x + '|'
     else :
@@ -69,6 +69,24 @@ for x in range(15):
         s = s + '-10-0'+ x + '|'
     else :
         s = s + '-10-'+ x + '|'
+for x in range(24, 31):
+    x = str(x)
+    if(len(x) == 1):
+        s = s + '-12-0'+ x + '|'
+    else :
+        s = s + '-12-'+ x + '|'
+    if(len(x) == 1):
+        s = s + '-03-0'+ x + '|'
+    else :
+        s = s + '-03-'+ x + '|'
+    if(len(x) == 1):
+        s = s + '-06-0'+ x + '|'
+    else :
+        s = s + '-06-'+ x + '|'
+    if(len(x) == 1):
+        s = s + '-09-0'+ x + '|'
+    else :
+        s = s + '-09-'+ x + '|'
 df['sel'] = df['datestr'].str.contains(s[:-1])
 
 
