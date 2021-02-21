@@ -28,6 +28,12 @@ https://api.bseindia.com/BseIndiaAPI/api/EQPeerGp/w?scripcode=500325&scripcomare
 https://api.bseindia.com/BseIndiaAPI/api/TabResults/w?scripcode=500325&tabtype=RESULTS
 https://api.bseindia.com/BseIndiaAPI/api/SecurityPosition/w?quotetype=EQ&scripcode=500325
 
+https://api.bseindia.com/BseIndiaAPI/api/TabResults/w?scripcode=532215&tabtype=RESULTS
+https://api.bseindia.com/BseIndiaAPI/api/GetReportNewFor_Result/w?scripcode=532215
+https://api.bseindia.com/BseIndiaAPI/api/TabResults/w?scripcode=532215&tabtype=NEWS
+https://api.bseindia.com/BseIndiaAPI/api/SecurityPosition/w?quotetype=EQ&scripcode=532215
+https://api.bseindia.com/BseIndiaAPI/api/EQPeerGp/w?scripcode=532215&scripcomare=
+https://www.bseindia.com/stock-share-price/axis-bank-ltd/axisbank/532215/shareholding-pattern/
 
 https://realpython.com/beautiful-soup-web-scraper-python/
 

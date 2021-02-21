@@ -30,12 +30,13 @@ import os
 import json
 import requests
 
-headers = {'User-Agent': 'Mozilla/5.0 (iPad; U; CPU OS 3_2_1 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Mobile/7B405'}
+headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:84.0) Gecko/20100101 Firefox/84.0',
+           'Host':'www.nseindia.com'}
 #headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36'}
 #headers = {'User-Agent': 'Mozilla/5.0 (Linux; Android 5.1.1; Nexus 5 Build/LMY48B; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/43.0.2357.65 Mobile Safari/537.36'}
 url =  'https://www.nseindia.com/api/equity-stockIndices?index=NIFTY%2050'
 datajson = requests.get(url, headers=headers).json()
-fname =  (datajson['name'] + '-'+ datajson['timestamp']).replace('.', '').replace(':', '-')+ '.json'
+fname =  datajson['name'] + '.json'
 
 
 if not os.path.exists('data'):
