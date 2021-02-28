@@ -1,0 +1,57 @@
+[
+  {
+    "mccode": "NII02",
+    "name": "COFORGE LIMITED Ltd.",
+    "wt": 6.01
+  },
+  {
+    "mccode": "HCL02",
+    "name": "HCL Technologies Ltd.",
+    "wt": 8.75
+  },
+  {
+    "mccode": "IT",
+    "name": "Infosys Ltd",
+    "wt": 10.27
+  },
+  {
+    "mccode": "LT",
+    "name": "Larsen & Toubro Ltd.",
+    "wt": 6
+  },
+  {
+    "mccode": "MB02",
+    "name": "MphasiS Ltd.",
+    "wt": 9.35
+  },
+  {
+    "mccode": "TCS",
+    "name": "Tata Consultancy Services Ltd.",
+    "wt": 12.89
+  },
+  {
+    "mccode": "TM4",
+    "name": "Tech Mahindra Ltd.",
+    "wt": 8.76
+  },
+  {
+    "mccode": "W",
+    "name": "Wipro Ltd.",
+    "wt": 8.61
+  },
+  {
+    "mccode": "IEI01",
+    "name": "Info Edge India Ltd.",
+    "wt": 8
+  },
+  {
+    "mccode": "OFS01",
+    "name": "Oracle Financial Services Software Ltd.",
+    "wt": 13.33
+  },
+  {
+    "mccode": "PS15",
+    "name": "Persistent Systems Ltd.",
+    "wt": 8.03
+  }
+]

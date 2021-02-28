@@ -129,3 +129,6 @@ dmypy.json
 *.png
 *.json
 *.h5
+
+# Exclude git ignore
+!Stock/moneycontrol/SmallCaseComp.json
