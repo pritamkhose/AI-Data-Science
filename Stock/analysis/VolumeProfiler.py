@@ -35,6 +35,7 @@ def volumeYearRange(days):
             df[['high', 'low', 'open', 'close', 'volume']] = df[[
                 'high', 'low', 'open', 'close', 'volume']].astype(float)
             df = df[['date', 'close', 'volume']]
+            df.drop(columns=['value'])
 
             df['volumeEMA20'] = df['volume'].ewm(span=20, adjust=False).mean()
             df['volumeEMA20'] = df['volume']/df['volumeEMA20']
