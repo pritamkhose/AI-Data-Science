@@ -32,5 +32,10 @@ pd.DataFrame().ta.indicators()
 # df.ta.strategy(include=['bop', 'mom', 'percent_return', 'wcp', 'pvi'], verbose=True)
 
 # # Sanity check. Make sure all the columns are there
-# df.columns
+print(df.columns)
 
+# dfD['logR'] = dfD.ta.log_return(cumulative=True, append=True)
+# dfD['percentR'] = dfD.ta.percent_return(cumulative=True, append=True)
+# dfD['sma10'] = ta.sma(dfD.close, length=10)
+
+# # print(df.ta.indicators())

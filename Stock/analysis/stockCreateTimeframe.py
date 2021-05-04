@@ -4,6 +4,9 @@ Created on Tue Dec 15 12:47:06 2020
 
 @author: Pritam
 
+https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.resample.html
+
+TimeFrame - 30S - 30 second, 5T or 5min- 5 minute, M, W, Q, A
 """
 
 import requests
@@ -16,22 +19,30 @@ import json
 from datetime import datetime
 
 fname = 'TCS'
-def readCSV():
+
+folderList = ['data', 'data/5T/', 'data/15T/', 'data/30T/','data/D/', 'data/W/', 'data/M/']
+for x in folderList:
+    try:
+        if not os.path.exists(x):
+            os.makedirs(x)
+    except OSError as err:
+        print(err)
+
+
+def readCSV(fname):
     df = pd.read_csv('data/'+fname+'.csv')
     df[['open', 'high', 'low', 'close', 'volume']] = df[['open', 'high', 'low', 'close', 'volume']].replace(np.nan, 0)
     df = df[df['open'] > 0]
-    df.reset_index(inplace = False)
+    # df.reset_index(inplace = False)
     # for y in df.columns:
     #     print(y, type(y))
     # print(df.head())
+    # print(df.columns)
     # print(df.info())
     df['timestamp'] = pd.to_datetime(df['timestamp'])
-
-
-# df = df.loc[((df['timestamp'] > '2017-01-01') & (df['timestamp'] <= '2017-01-31'))]
+    return df
 
 def calcHLOCV(dftemp, sample):
-    dftemp.set_index('timestamp', inplace = True)
     dfH = dftemp.high.resample(sample).max().to_frame() 
     dfL = dftemp.low.resample(sample).min().to_frame() 
     dfO = dftemp.open.resample(sample).first().to_frame() 
@@ -44,16 +55,22 @@ def calcHLOCV(dftemp, sample):
             PV = [dfH.index[row], dfH['high'][row], dfL['low'][row], dfO['open'][row], dfC['close'][row], dfV['volume'][row]]
             PVList.append(PV)
     dftemp = pd.DataFrame(PVList, columns =['timestamp', 'high', 'low', 'open', 'close', 'volume'])
+    # dftemp.set_index('timestamp', inplace = True)
     dftemp.to_json('data/'+sample+'/'+ fname +'.json')
     return dftemp
 
-# dfD = calcHLOCV(df, 'D')
+df = readCSV(fname)
+df.set_index('timestamp', inplace = True)
+# df = df.loc[((df['timestamp'] > '2017-01-01') & (df['timestamp'] <= '2017-01-31'))]
+
+dfD = calcHLOCV(df, 'D')
+dfW = calcHLOCV(df, 'W')
+dfM = calcHLOCV(df, 'M')
+
+df5T = calcHLOCV(df, '5T')
+df15T = calcHLOCV(df, '15T')
+df30T = calcHLOCV(df, '30T')
+
 dfD = pd.DataFrame(json.load(open('data/D/'+ fname +'.json')))
-# dfD.set_index('timestamp', inplace = True)
-
-dfD['logR'] = dfD.ta.log_return(cumulative=True, append=True)
-dfD['percentR'] = dfD.ta.percent_return(cumulative=True, append=True)
-dfD['sma10'] = ta.sma(dfD.close, length=10)
-
-print(dfD.columns)
-# print(dfD.ta.indicators())
+dfW = pd.DataFrame(json.load(open('data/W/'+ fname +'.json')))
+dfM = pd.DataFrame(json.load(open('data/M/'+ fname +'.json')))
