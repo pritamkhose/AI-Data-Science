@@ -24,6 +24,8 @@ https://www.moneycontrol.com/technical-analysis/tataconsultancyservices/TCS/mont
 https://github.com/pritamkhose/stock-python/blob/main/techCalcRoutes.py
 
 https://www.w3schools.com/python/matplotlib_subplots.asp
+
+https://corporatefinanceinstitute.com/resources/knowledge/trading-investing/fast-stochastic-indicator/
 """
 from datetime import datetime
 import os
@@ -37,7 +39,7 @@ from ta import add_all_ta_features
 from ta.utils import dropna
 
 from ta.volatility import BollingerBands, AverageTrueRange, KeltnerChannel, DonchianChannel
-from ta.momentum import RSIIndicator, StochRSIIndicator, WilliamsRIndicator, ROCIndicator
+from ta.momentum import RSIIndicator, StochRSIIndicator, WilliamsRIndicator, ROCIndicator, StochasticOscillator, AwesomeOscillatorIndicator
 from ta.trend import macd, MACD, CCIIndicator, ADXIndicator, IchimokuIndicator, WMAIndicator, SMAIndicator, EMAIndicator
 from ta.volume import MFIIndicator, VolumeWeightedAveragePrice
 from ta.others import DailyReturnIndicator, CumulativeReturnIndicator
@@ -63,6 +65,14 @@ indicator = StochRSIIndicator(close=df["close"], window = 20)
 df['stochrsi'] = indicator.stochrsi()
 df['stochrsi_d'] = indicator.stochrsi_d()
 df['stochrsi_k'] = indicator.stochrsi_k()
+
+# FSTO
+indicator = StochasticOscillator(close=df["close"], high=df["high"], low=df["low"], window = 14)
+df['stoch_k'] = indicator.stoch()
+df['stoch_d'] = indicator.stoch_signal()
+df['stoch_fsto'] = df['stoch_d'].rolling(window=3).mean()
+
+df["ao"] = AwesomeOscillatorIndicator(high=df["high"], low=df["low"]).awesome_oscillator()
 
 indicator = WilliamsRIndicator(close=df["close"], high=df["high"], low=df["low"], lbp = 14)
 df["williams_r"] = indicator.williams_r()
@@ -178,6 +188,15 @@ def stochrsiAction(r):
         action = 0 #'Neutral'
     return action
 
+def stochAction(r):
+    if(r >= 80):
+        action = -1 #'high'
+    elif(r <= 20):
+        action = 1 #'low'
+    else:
+        action = 0 #'Neutral'
+    return action
+
 def williamsRAction(r):
     if(r >= -20):
         action = -1 #'high'
@@ -200,11 +219,22 @@ def maAction(low, med, high):
     action = 0
     return action
 
+def aoAction(r):
+    if(r >= 0):
+        action = 1 #'high'
+    else:
+        action = -1 #'Neutral'
+    return action 
+
 # Decide Buy/ Sell
 dfDecide = df[['date', 'close', 'volume' ]]
 
 # dfDecide["rsi"] = df["rsi"].apply(lambda x: RSI_MFI_Action(x))
 # dfDecide["stochrsi"] = df["stochrsi"].apply(lambda x: stochrsiAction(x))
+dfDecide["stoch_d"] = df["stoch_d"].apply(lambda x: stochAction(x))
+dfDecide["fsto"] = df["stoch_fsto"].apply(lambda x: stochAction(x))
+dfDecide["ao"] = df["ao"].apply(lambda x: aoAction(x))
+
 # dfDecide["williams_r"] = df["williams_r"].apply(lambda x: williamsRAction(x))
 # dfDecide["roc"] = df["roc"].apply(lambda x: rocAction(x))
 # dfDecide["macd"] = df["macd"] > df["macd_signal"]
@@ -214,7 +244,7 @@ dfDecide = df[['date', 'close', 'volume' ]]
 
 # dfDecide["mfi"] = df["mfi"].apply(lambda x: RSI_MFI_Action(x)) # https://www.investopedia.com/terms/m/mfi.asp
 # dfDecide["vwamp"] = df["vwamp"] > df["close"]
-dfDecide["ma"] = df.MA_CO_5_20 + df.MA_CO_20_50 + df.MA_CO_50_200
+# dfDecide["ma"] = df.MA_CO_5_20 + df.MA_CO_20_50 + df.MA_CO_50_200
 
 # Plot graph
 
@@ -248,15 +278,20 @@ plt.plot(dfDecide.date, dfDecide.close, linewidth = '1', color='blue')
 # plt.plot(df.date, (df.dc_hb + df.dc_lb)/2, linewidth = '1', color='cyan', linestyle='dashed')
 
 # plt.title("SMA")
-plt.plot(df.date, df.EMA5, linewidth = '1', color='cyan',)
-plt.plot(df.date, df.EMA20, linewidth = '1', color='green')
-plt.plot(df.date, df.EMA50, linewidth = '1', color='orange')
-plt.plot(df.date, df.EMA200, linewidth = '1', color='red')
+# plt.plot(df.date, df.EMA5, linewidth = '1', color='cyan',)
+# plt.plot(df.date, df.EMA20, linewidth = '1', color='green')
+# plt.plot(df.date, df.EMA50, linewidth = '1', color='orange')
+# plt.plot(df.date, df.EMA200, linewidth = '1', color='red')
 
 plt.subplot(3, 1, 2)
 plt.grid()
 # plt.plot(df.date, df.rsi, linewidth = '1')
+
+
 # plt.plot(df.date, df.stochrsi  *100, linewidth = '1')
+# plt.plot(df.date, df.DR, linewidth = '1', color='green')
+# plt.plot(df.date, df.CR, linewidth = '1', color='red')
+
 # plt.plot(df.date, df.williams_r, linewidth = '1')
 # plt.plot(df.date, df.roc, linewidth = '1')
 # plt.plot(df.date, df.macd, linewidth = '1')
@@ -273,14 +308,23 @@ plt.grid()
 # plt.plot(df.date, df.DR, linewidth = '1', color='green')
 # plt.plot(df.date, df.CR, linewidth = '1', color='red')
 
-plt.plot(df.date, df.MA_CO_5_20, linewidth = '1', color='cyan',)
-plt.plot(df.date, df.MA_CO_20_50, linewidth = '1', color='green')
-plt.plot(df.date, df.MA_CO_50_200, linewidth = '1', color='magenta')
+plt.plot(df.date, df.stoch_k, linewidth = '1', color='blue',)
+plt.plot(df.date, df.stoch_d, linewidth = '1', color='red')
+plt.plot(df.date, df.stoch_fsto, linewidth = '1', color='green')
+plt.plot(df.date, df.ao, linewidth = '1', color='magenta')
+
+# plt.plot(df.date, df.MA_CO_5_20, linewidth = '1', color='cyan',)
+# plt.plot(df.date, df.MA_CO_20_50, linewidth = '1', color='green')
+# plt.plot(df.date, df.MA_CO_50_200, linewidth = '1', color='magenta')
 
 plt.subplot(3, 1, 3)
 plt.grid()
 # plt.plot(dfDecide.date, dfDecide.rsi, linewidth = '1')
 # plt.plot(dfDecide.date, dfDecide.stochrsi, linewidth = '1')
+plt.plot(dfDecide.date, dfDecide.stoch_d, linewidth = '1')
+plt.plot(dfDecide.date, dfDecide.fsto, linewidth = '1')
+plt.plot(dfDecide.date, dfDecide.ao, linewidth = '1')
+
 # plt.plot(dfDecide.date, dfDecide.williams_r, linewidth = '1')
 # plt.plot(dfDecide.date, dfDecide.roc, linewidth = '1')
 # plt.plot(dfDecide.date, dfDecide.macd, linewidth = '1')
@@ -288,7 +332,7 @@ plt.grid()
 # plt.plot(dfDecide.date, dfDecide.mfi, linewidth = '1')
 # plt.plot(dfDecide.date, dfDecide.vwap, linewidth = '1')
 
-plt.plot(df.date, dfDecide.ma, linewidth = '1', color='green')
+# plt.plot(df.date, dfDecide.ma, linewidth = '1', color='green')
 
 plt.gcf().autofmt_xdate()
 # plt.savefig('1.svg')
