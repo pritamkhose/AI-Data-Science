@@ -37,19 +37,19 @@ def getData():
                 'high', 'low', 'open', 'close', 'volume']].astype(float)
 
             # # take last 1Y or 250 days but week time frame
-            df['date'] = pd.to_datetime(df['date'], format='%Y-%m-%d')
-            df.set_index('date', inplace=True)
-            df = calcHLOCV(df, 'W')
+            # df['date'] = pd.to_datetime(df['date'], format='%Y-%m-%d')
+            # df.set_index('date', inplace=True)
+            # df = calcHLOCV(df, 'W')
 
             dflen = len(df)
-            # # take last 1Y or 250 days
-            # df = df[dflen-250:dflen]
+            # take last 1Y or 250 days
+            df = df[dflen-250:dflen]
 
             # take last 70 Week
-            if(dflen-70) > 0:
-                df = df[dflen-70:dflen]
-            else:
-                df
+            # if(dflen-70) > 0:
+            #     df = df[dflen-70:dflen]
+            # else:
+            #     df
 
             df['hl'] = df.high - df.low
             df['oc'] = df.open - df.close
@@ -59,8 +59,9 @@ def getData():
             df['ocp'] = (df['oc'] * 100)/df.close
 
             # rangeList = [0,0.25,0.5,0.75,1,1.5,2,2.5,3,4,5,6,7,8,9,10,15,20,100]
-            rangeList = [0, 0.5, 1, 1.5, 2, 2.5, 3,
-                         4, 5, 6, 7, 8, 9, 10, 15, 20, 100]
+            # rangeList = [0, 0.5, 1, 1.5, 2, 2.5, 3,
+            #              4, 5, 6, 7, 8, 9, 10, 15, 20, 100]
+            rangeList = [0,0.5,1,2,3,5,7.5,10,15,20,100]
             aList = [fname]
             colList = ['mc_code']
             for row in range(len(rangeList)-1):
@@ -80,7 +81,8 @@ def getData():
             print(fname, str(e))
 
     dfochl = pd.DataFrame(stockList, columns=colList)
-    dfochl.to_json('data/ochl_percent.json', orient='records', indent=2)
+    dfochl.to_json('data/ochl_percent_day.json', orient='records', indent=2)
+    return dfochl
 
 
 def calcHLOCV(df, sample):
@@ -98,7 +100,7 @@ def calcHLOCV(df, sample):
 
 
 def analyzeData():
-    dfochl = pd.DataFrame(json.load(open('data/ochl_percent.json')))
+    dfochl = pd.DataFrame(json.load(open('data/ochl_percent_day.json')))
     dfcomp = pd.DataFrame(
         json.load(open('E:\Code\python\Stock\StockAPI\extra\stock_bse_nse_mc.json')))
     dfcomp = dfcomp[['mc_code', 'comp_name']]
@@ -128,5 +130,14 @@ def analyzeData():
     return {'open_close_percent': resultOCP, 'high_low_percent': resultHLP}
 
 
-getData()
+# dfochl = getData()
 result = analyzeData()
+print(result['high_low_percent'].columns)
+
+# df = result['high_low_percent']
+# result2 = df[['mc_code', 'comp_name']]
+# result2['loss'] = df['hlp_L0H0.5'] 
+# result2['less'] =  df['hlp_L0.5H1'] + df['hlp_L1H1.5']
+# result2['normal'] =  df['hlp_L1.5H2'] + df['hlp_L2H2.5'] + df['hlp_L2.5H3']
+# result2['high'] =  df['hlp_L3H4'] + df['hlp_L4H5'] 
+# result2['veryhigh'] =  df.iloc[11:15].sum()
