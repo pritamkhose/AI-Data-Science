@@ -103,7 +103,7 @@ def mergeResult():
 
 def getBSENSEComp():
     # nse BhavcopyCSV csv
-    nseBhavdf = pd.read_csv("cm09APR2021bhav.csv")
+    nseBhavdf = pd.read_csv("cm11JUN2021bhav.csv")
 
     # nse market-capitalisation excel
     nseMakCapdf = pd.read_excel("MCAP31032021_0.xlsx")
@@ -124,6 +124,7 @@ def getBSENSEComp():
     resultBSENSE.to_json('resultBSENSE.json', orient='records')
     return resultBSENSE
 
+resultBSENSE = getBSENSEComp()
 
 def getMcBseNseAllCapScriptUR():
     # hit in brower and save json file
