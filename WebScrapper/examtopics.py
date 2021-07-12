@@ -12,7 +12,7 @@ pip install selenium
 from bs4 import BeautifulSoup
 import json
 import pandas as pd
-
+import math
 
 from selenium import webdriver
 
@@ -98,6 +98,10 @@ def getListofQueAnswer():
             URLobj['ans_details'] = soup.find("span", {"class": "answer-description"}).text  # not showing
                 
             aListQueAns.append(URLobj)
+            
+            if(index%100 == 0):
+                with open('examtopicsListQueAns.json', 'w', encoding='utf-8') as f:
+                    json.dump(aListQueAns, f, ensure_ascii=False, indent=2)   
         except Exception as e:
             print(e)
             
@@ -106,7 +110,20 @@ def getListofQueAnswer():
     browser.close()
 
 
-getListofQueAnswer()
+# getListofQueAnswer()
 
-
+data = json.load(open('examtopicsListQueAns Final.json', 'r', encoding='utf-8'))
+# with open('examtopicsListQueAns Final small.json', 'w', encoding='utf-8') as f:
+#         json.dump(data[0:500], f, ensure_ascii=False)   
+# df = pd.DataFrame(data)
+index = 0
+datalen = len(data)
+size = 300
+dataspilt = math.ceil(datalen/size)
+for obj in range(dataspilt):
+    index += 1
+    array = data[((index-1)*size):(index*size)]
+    with open('examtopics-'+str(index)+'.json', 'w', encoding='utf-8') as f:
+        json.dump(array, f, ensure_ascii=False)   
+    print(str(index) + ' - ' + str(len(array)))
 
