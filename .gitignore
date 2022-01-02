@@ -132,3 +132,6 @@ dmypy.json
 
 # Exclude git ignore
 !Stock/moneycontrol/SmallCaseComp.json
+
+# mac
+.DS_Store
