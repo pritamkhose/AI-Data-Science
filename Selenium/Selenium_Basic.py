@@ -4,7 +4,20 @@ Created on Mon Aug 24 21:12:19 2020
 
 @author: Pritam
 
+https://stackoverflow.com/questions/39428042/use-selenium-with-chromedriver-on-mac
+
+MAC OS
+brew install geckodriver
+which geckodriver
+
+brew install chromedriver
+which chromedriver
+
 pip install selenium
+sudo pip3 install selenium
+
+Windows
+https://www.selenium.dev/documentation/webdriver/getting_started/install_drivers/
 
 https://www.guru99.com/selenium-python.html#:~:text=Selenium%20is%20an%20open%2Dsource,with%20the%20browser%20through%20Selenium
 """
@@ -14,8 +27,11 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 
 # Step 1) Open Firefox 
-browser = webdriver.Firefox(executable_path=r'E:\Software\Chromedriver\geckodriver.exe')
+browser = webdriver.Firefox(executable_path=r'/opt/homebrew/bin/geckodriver')
+#browser = webdriver.Firefox(executable_path=r'E:\Software\Chromedriver\geckodriver.exe')
+
 # Step 1) Open Chrome 
+# browser = webdriver.Chrome(executable_path=r'/opt/homebrew/bin/chromedriver')
 #browser = webdriver.Chrome(executable_path=r"E:\Software\Chromedriver\chromedriver.exe")
 
 def facebook():
@@ -48,8 +64,8 @@ def google():
     
 
 try:
-#  google()
-    facebook()
+    google()
+    #facebook()
 except:
     print("Something went wrong")
 finally:
